@@ -73,7 +73,7 @@ export default class BooksRepository {
         }
     }
 
-    async updateBook({ id, data }: { id: string, data: BookType}): Promise<BooksRepoResponse> {
+    async updateBook({ id, data }: { id: number, data: BookType}): Promise<BooksRepoResponse> {
         try {
             const updatedBook = await Book.findOneAndUpdate({ id: id }, data);
 
@@ -88,6 +88,42 @@ export default class BooksRepository {
             return {
                 status: 200,
                 data: updatedBook
+            }
+        } catch (error: any) {
+            if (error.code == 11000)
+                return {
+                    status: 401,
+                    data: {
+                        message: 'Duplicated key'
+                    }
+                }
+
+            return {
+                status: 500,
+                data: {
+                    message: 'Error updating book'
+                }
+            }
+        }
+    }
+
+    async deleteBook(id: number): Promise<BooksRepoResponse> {
+        try {
+            const book = await Book.findOneAndDelete({ id: id });
+
+            if (book === null)
+                return {
+                    status: 404,
+                    data: {
+                        message: 'Book not found'
+                    }
+                }
+
+            return {
+                status: 200,
+                data: {
+                    message: 'Book deleted'
+                }
             }
         } catch (error) {
             return {
