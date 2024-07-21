@@ -7,7 +7,7 @@ const routes = Router()
     .get('/livros', booksController.getAllBooks)
     .get('/livros/:id', booksController.getBook)
 
-    .post('/livros')
+    .post('/livros', booksController.createBook)
     .put('/livros/:id')
 
     .delete('/livros/:id')
