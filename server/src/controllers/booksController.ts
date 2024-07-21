@@ -30,7 +30,9 @@ export default class BooksController {
         const { id, titulo, num_paginas, isbn, editora } = req.body;
         if (!id || !titulo || !num_paginas || !isbn || !editora)
             return res.status(400).json({
-                message: 'Missing required fields'
+                data: {
+                    message: 'Missing required fields'
+                }
             });
 
         await booksRepo.createBook(req.body)
@@ -43,14 +45,16 @@ export default class BooksController {
     };
     
     async updateBook(req: Request, res: Response) {
-        const { id: idParam } = req.params;
         const { id, titulo, num_paginas, isbn, editora } = req.body;
-        if (!id || !titulo || !num_paginas || !isbn || !editora)
+
+        if (!titulo || !num_paginas || !isbn || !editora)
             return res.status(400).json({
-                message: 'Missing required fields'
+                data: {
+                    message: 'Missing required fields'
+                }
             });
 
-        await booksRepo.updateBook({ id: Number(idParam), data: req.body })
+        await booksRepo.updateBook({ id: Number(id), data: req.body })
             .then(({ status, data }) => {
                 if(status === 200)
                     return res.status(status).json(data);
