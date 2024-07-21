@@ -1,8 +1,14 @@
 import express from 'express';
 import routes from './routes';
-const app = express();
+import cors from 'cors';
 
-app.use(express.json());
-app.use(routes);
+const app = express()
+    .use(express.json())
+    .use(cors({
+        origin: '*',
+        allowedHeaders: ['Content-Type', 'Authorization'],
+        methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    }))
+    .use(routes);
 
 export default app;
