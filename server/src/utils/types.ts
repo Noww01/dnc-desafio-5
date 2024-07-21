@@ -1,7 +1,6 @@
 export type BooksRepoResponse = {
     status: number,
-    data?: {}, 
-    message?: string
+    data: {},
 }
 
 export type BookType = {

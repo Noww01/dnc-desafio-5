@@ -8,7 +8,7 @@ const routes = Router()
     .get('/livros/:id', booksController.getBook)
 
     .post('/livros', booksController.createBook)
-    .put('/livros/:id')
+    .put('/livros/:id', booksController.updateBook)
 
     .delete('/livros/:id')
 
