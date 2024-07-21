@@ -87,7 +87,9 @@ export default class BooksRepository {
 
             return {
                 status: 200,
-                data: updatedBook
+                data: {
+                    message: 'Book updated'
+                }
             }
         } catch (error: any) {
             if (error.code == 11000)
