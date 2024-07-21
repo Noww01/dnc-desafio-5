@@ -1,14 +1,15 @@
 import { Router } from "express";
+import BooksController from "./controllers/booksController";
 
-const routes = Router();
+const booksController = new BooksController();
 
-routes
-    .get('/livros')
-    .get('/livros/:id')
+const routes = Router()
+    .get('/livros', booksController.getAllBooks)
+    .get('/livros/:id', booksController.getBook)
 
-    .post('/livros')
-    .put('/livros/:id')
+    .post('/livros', booksController.createBook)
+    .put('/livros/:id', booksController.updateBook)
 
-    .delete('/livros/:id')
+    .delete('/livros/:id', booksController.deleteBook);
 
 export default routes;
