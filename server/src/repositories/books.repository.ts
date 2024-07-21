@@ -11,11 +11,11 @@ export default class BooksRepository {
                 data: allBooks
             }
         } catch (error) {
-            console.log(error);
-
             return {
                 status: 500,
-                message: 'Error fetching books'
+                data: {
+                    message: 'Error fetching books'
+                }
             }
         }
     }
@@ -27,7 +27,9 @@ export default class BooksRepository {
             if (book === null)
                 return {
                     status: 404,
-                    message: 'Book not found'
+                    data: {
+                        message: 'Book not found'
+                    }
                 }
 
             return {
@@ -35,11 +37,11 @@ export default class BooksRepository {
                 data: book
             }
         } catch (error) {
-            console.log(error);
-
             return {
                 status: 500,
-                message: 'Error fetching books'
+                data: {
+                    message: 'Error fetching books'
+                }
             }
         }
     }
@@ -53,12 +55,46 @@ export default class BooksRepository {
                 status: 201,
                 data: newBook
             }
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            if (error.code == 11000)
+                return {
+                    status: 401,
+                    data: {
+                        message: 'Book already exists'
+                    }
+                }
 
             return {
                 status: 500,
-                message: 'Error creating book'
+                data: {
+                    message: 'Error creating book'
+                }
+            }
+        }
+    }
+
+    async updateBook({ id, data }: { id: string, data: BookType}): Promise<BooksRepoResponse> {
+        try {
+            const updatedBook = await Book.findOneAndUpdate({ id: id }, data);
+
+            if (updatedBook === null)
+                return {
+                    status: 404,
+                    data: {
+                        message: 'Book not found'
+                    }
+                }
+
+            return {
+                status: 200,
+                data: updatedBook
+            }
+        } catch (error) {
+            return {
+                status: 500,
+                data: {
+                    message: 'Error updating book'
+                }
             }
         }
     }
