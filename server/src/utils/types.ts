@@ -1,14 +1,19 @@
-import { model, Schema } from "mongoose";
+export type BooksRepoResponse = {
+    status: number,
+    data?: {}, 
+    message?: string
+}
 
-const BookSchema = new Schema({
+export type BookType = {
     id: {
-        type: Number,
+        type: number,
         required: true,
         unique: true,
     },
     titulo: {
         type: String,
         required: true,
+        unique: true,
     },
     num_paginas: {
         type: Number,
@@ -23,8 +28,4 @@ const BookSchema = new Schema({
         type: String,
         required: true
     }
-});
-
-const Book = model('Book', BookSchema);
-
-export default Book;
+}
