@@ -10,6 +10,6 @@ const routes = Router()
     .post('/livros', booksController.createBook)
     .put('/livros/:id', booksController.updateBook)
 
-    .delete('/livros/:id')
+    .delete('/livros/:id', booksController.deleteBook)
 
 export default routes;

@@ -50,12 +50,24 @@ export default class BooksController {
                 message: 'Missing required fields'
             });
 
-        await booksRepo.updateBook({ id: idParam, data: req.body })
+        await booksRepo.updateBook({ id: Number(idParam), data: req.body })
             .then(({ status, data }) => {
                 if(status === 200)
                     return res.status(status).json(data);
 
                 return res.status(status).json(data);
             });
+    }
+
+    async deleteBook(req: Request, res: Response) {
+        const { id } = req.params;
+        
+        await booksRepo.deleteBook(Number(id))
+            .then(({ status, data }) => {
+                if(status === 200)
+                    return res.status(status).json(data);
+
+                return res.status(status).json(data);
+            })
     }
 }
