@@ -43,4 +43,23 @@ export default class BooksRepository {
             }
         }
     }
+
+    async createBook(data: BookType): Promise<BooksRepoResponse> {
+        try {
+            const newBook = new Book(data);
+            await newBook.save();
+
+            return {
+                status: 201,
+                data: newBook
+            }
+        } catch (error) {
+            console.log(error);
+
+            return {
+                status: 500,
+                message: 'Error creating book'
+            }
+        }
+    }
 }

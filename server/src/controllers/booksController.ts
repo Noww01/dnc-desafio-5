@@ -29,4 +29,22 @@ export default class BooksController {
                 });
             });
     };
+
+    async createBook(req: Request, res: Response) {
+        const { id, titulo, num_paginas, isbn, editora } = req.body;
+        if (!id || !titulo || !num_paginas || !isbn || !editora)
+            return res.status(400).json({
+                message: 'Missing required fields'
+            });
+
+        await booksRepo.createBook(req.body)
+            .then(({ status, data }) => {
+                if(status === 200)
+                    return res.status(status).json(data);
+
+                return res.status(500).json({
+                    message: 'Error craeting book'
+                });
+            });
+    };
 }
